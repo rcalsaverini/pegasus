@@ -11,26 +11,26 @@
 {% block content %}
 <div class="grid">
 <div class="row"> 
-<table class="table table-border cell-border" data-role="table">
+<table class="uk-table uk-table-small uk-table-divider uk-table-hover">
     <thead>
         <tr>
-            <th data-sortable="true">Grant Name</th>
-            <th data-sortable="true">Kind</th>
-            <th data-sortable="true" data-format="date">Grant date</th>
-            <th data-sortable="true" data-format="int">Number of Shares</th>
-            <th data-sortable="true">Vesting</th>
+            <th>Grant Name</th>
+            <th>Kind</th>
+            <th>Grant date</th>
+            <th>Number of Shares</th>
+            <th>Vesting</th>
         </tr>
     </thead>
     <tbody>
         {% for grant in grants %}
-        <tr class>
-            <td class="grant-name">
-                <a href={{ url_for("grants.grant", name=grant.name) }}> {{ grant.name }} </a>
+        <tr>
+            <td class="grant-name uk-table-link">
+                <a class="uk-link-reset" href={{ url_for("grants.grant", name=grant.name) }}> {{ grant.name }} </a>
             </td>
-            <td class="grant-kind">{{ grant.kind }}</td>
-            <td class="grant-date">{{ grant.date.date() }}</td>
-            <td class="grant-shares">{{ grant.shares }}</td>
-            <td class="grant-vesting">{{ grant.vesting }} years {% if grant.cliff != 0 %} with {{ grant.cliff }} years cliff {% endif %} </td>
+            <td>{{ grant.kind }}</td>
+            <td>{{ grant.date.date() }}</td>
+            <td>{{ grant.shares }}</td>
+            <td>{{ grant.vesting }} years {% if grant.cliff != 0 %} with {{ grant.cliff }} years cliff {% endif %} </td>
         </tr>
         {% endfor %}
     </tbody>

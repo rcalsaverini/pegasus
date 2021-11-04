@@ -2,33 +2,37 @@
 <html lang="en">
   <head>
     {% block head %}
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
-    <link rel="stylesheet" href={{ url_for('static', filename='style.css') }} />
-    <title>{% block title %}{% endblock %}</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- load MUI -->
+      <link href="{{ url_for('static', filename='css/uikit.min.css') }}" rel="stylesheet" type="text/css" />
+      <script src="{{ url_for('static', filename='js/uikit.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/uikit-icons.min.js') }}"></script>
+      <title>{% block title %}{% endblock %}</title>
     {% endblock %}
   </head>
   <body>
-    <h1>{%block pagetitle %}{%endblock%}</h1>
-    <div id="content">{% block content %}{% endblock %}</div>
-
-    <div class="bottom-nav pos-absolute">
-        <a class="button" href="/grants">
-            <span class="icon mif-plus"></span>
-            <span class="label">List of Grants</span>
-        </a>
-        <button class="button">
-            <span class="icon mif-favorite"></span>
-            <span class="label">Favorites</span>
-        </button>
-        <button class="button">
-            <span class="icon mif-search"></span>
-            <span class="label">Search</span>
-        </button>
+    <nav class="uk-navbar-container" uk-navbar>
+    <div class="uk-navbar-left">
+        <ul class="uk-navbar-nav">
+            <li class="uk-active"><a href="/"><span uk-icon="icon: home"></span>Home</a></li>
+            <li class="uk-active"><a href="/grants"><span uk-icon="icon: file-text"></span>Grants</a></li>
+            <li class="uk-active"><a href="/scenarios"><span uk-icon="icon: nut"></span>Scenarios</a></li>
+        </ul>
+    </div>
+    <div class="uk-navbar-right">
+      <div class="uk-navbar-item uk-text-large">{%block pagetitle %}{%endblock%}</div>
     </div>
 
+
+    </nav>
+
+
+
+    
+    <div id="content">{% block content %}{% endblock %}</div>
+
+
     <div id="footer">{% block footer %} {% endblock %}</div>
-    <script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
   </body>
 </html>
