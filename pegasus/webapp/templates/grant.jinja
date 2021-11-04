@@ -1,0 +1,27 @@
+{% extends "base.jinja" %} 
+
+{% block title %}Grants{% endblock %} 
+
+{% block head %}
+{{ super() }} 
+{% endblock %} 
+
+{%block pagetitle %} Grant {{grant.name}} {%endblock%}
+
+{% block content %}
+
+
+
+<div class="grid">
+<div class="row"> 
+<div class="grant cell-6 offset-3">
+    <div class="title text-leader"> Grant {{ grant.name }} description: </div>
+    <div class="group-list horizontal"> <em class="item no-border item-name">Description:</em><span class="item no-border">{{ grant.shares }} {{ grant.kind if  grant.kind == "RSU" else grant.kind.title() }}s granted on {{ grant.date.date() }}</span></div>
+    <div class="group-list horizontal"> <em class="item no-border item-name">Vesting:</em><span class="item no-border"> {{ grant.vesting }} years {% if grant.cliff != 0 %} with {{ grant.cliff }} years cliff {% endif %} </span></div>
+</div> 
+</div>
+</div>
+
+
+{% endblock %}
+

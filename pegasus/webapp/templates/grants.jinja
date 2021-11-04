@@ -1,0 +1,41 @@
+{% extends "base.jinja" %} 
+
+{% block title %}Grants{% endblock %} 
+
+{% block head %}
+{{ super() }} 
+{% endblock %} 
+
+{%block pagetitle %}List of Grants {%endblock%}
+
+{% block content %}
+<div class="grid">
+<div class="row"> 
+<table class="table table-border cell-border" data-role="table">
+    <thead>
+        <tr>
+            <th data-sortable="true">Grant Name</th>
+            <th data-sortable="true">Kind</th>
+            <th data-sortable="true" data-format="date">Grant date</th>
+            <th data-sortable="true" data-format="int">Number of Shares</th>
+            <th data-sortable="true">Vesting</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for grant in grants %}
+        <tr class>
+            <td class="grant-name">
+                <a href={{ url_for("grants.grant", name=grant.name) }}> {{ grant.name }} </a>
+            </td>
+            <td class="grant-kind">{{ grant.kind }}</td>
+            <td class="grant-date">{{ grant.date.date() }}</td>
+            <td class="grant-shares">{{ grant.shares }}</td>
+            <td class="grant-vesting">{{ grant.vesting }} years {% if grant.cliff != 0 %} with {{ grant.cliff }} years cliff {% endif %} </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+</div>
+{% endblock %}
+

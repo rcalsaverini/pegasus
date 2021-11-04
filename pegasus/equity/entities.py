@@ -1,26 +1,46 @@
 from dataclasses import dataclass
-import dataclasses
 from enum import Enum
 from pandas import Series
+from datetime import date
 
 
 @dataclass
 class Grant:
     name: str
-    schedule: Series
+    shares: int
+    date: date
+    cliff: int
+    vesting: int
 
-    def net_value(self, price):
-        return price
+
+@dataclass
+class RSUGrant(Grant):
+    kind: str = "RSU"
 
 
 @dataclass
 class OptionGrant(Grant):
     strike: float
-
-    def net_value(self, price):
-        return price - self.strike
+    kind: str = "OPTION"
 
 
-@dataclass
-class RSUGrant(Grant):
-    pass
+# @dataclass
+# class Grant:
+#     name: str
+#     schedule: Series
+
+#     def net_value(self, price):
+#         return price
+
+
+# @dataclass
+# class OptionGrant(Grant):
+#     strike: float
+
+#     def net_value(self, price):
+#         return price - self.strike
+
+
+# @dataclass
+# class RSUGrant(Grant):
+#     pass

@@ -1,0 +1,12 @@
+h1 {
+  text-align: center;
+}
+
+div.grant {
+  text-align: center;
+}
+
+em.item-name {
+  font-style: normal;
+  font-weight: bold;
+}
