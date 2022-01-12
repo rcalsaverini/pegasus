@@ -1,9 +1,10 @@
 from flask import Flask, g
-from pegasus.webapp.views import grants
+from pegasus.webapp.equity.views import grants
 
 
 app = Flask(__name__)
 app.register_blueprint(grants)
+app.config["SECRET_KEY"] = "asjdahfsiahfa 0u    t aihgpiwdN"
 
 
 @app.teardown_appcontext

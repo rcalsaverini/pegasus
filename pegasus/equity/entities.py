@@ -1,6 +1,5 @@
-from dataclasses import dataclass
-from enum import Enum
-from pandas import Series
+from dataclasses import dataclass, fields, asdict
+from pandas import to_datetime
 from datetime import date
 
 
@@ -11,6 +10,16 @@ class Grant:
     date: date
     cliff: int
     vesting: int
+
+    def to_dict(self):
+        dictionary = asdict(self)
+        dictionary["date"] = dictionary["date"].strftime("%Y-%m-%d")
+        return dictionary
+
+    @classmethod
+    def from_dict(cls, dictionary):
+        dictionary["date"] = to_datetime((dictionary["date"]))
+        return cls(**{f.name: dictionary[f.name] for f in fields(cls)})
 
 
 @dataclass

@@ -9,33 +9,89 @@
 {%block pagetitle %}List of Grants {%endblock%}
 
 {% block content %}
-<div class="grid">
-<div class="row"> 
-<table class="uk-table uk-table-small uk-table-divider uk-table-hover">
-    <thead>
-        <tr>
-            <th>Grant Name</th>
-            <th>Kind</th>
-            <th>Grant date</th>
-            <th>Number of Shares</th>
-            <th>Vesting</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for grant in grants %}
-        <tr>
-            <td class="grant-name uk-table-link">
-                <a class="uk-link-reset" href={{ url_for("grants.grant", name=grant.name) }}> {{ grant.name }} </a>
-            </td>
-            <td>{{ grant.kind }}</td>
-            <td>{{ grant.date.date() }}</td>
-            <td>{{ grant.shares }}</td>
-            <td>{{ grant.vesting }} years {% if grant.cliff != 0 %} with {{ grant.cliff }} years cliff {% endif %} </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="uk-child-width-1-1" uk-grid>
+    <div class="uk-card uk-card-default uk-card-body">
+    <table class="uk-table uk-table-small uk-table-divider uk-table-hover">
+        <thead>
+            <tr>
+                <th>Grant Name</th>
+                <th>Kind</th>
+                <th>Grant date</th>
+                <th>Number of Shares</th>
+                <th>Vesting</th>
+                <th>Strike</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for grant in grants %}
+            <tr>
+                <td class="grant-name uk-table-link">
+                    <a class="uk-link-reset" href={{ url_for("grants.grant", name=grant.name) }}> {{ grant.name }} </a>
+                </td>
+                <td>{{ grant.kind }}</td>
+                <td>{{ grant.date.date() }}</td>
+                <td>{{ grant.shares }}</td>
+                <td>{{ grant.vesting }} years {% if grant.cliff != 0 %} with {{ grant.cliff }} years cliff {% endif %} </td>
+                <td>{% if grant.kind == "OPTION" %} {{ grant.strike }} USD {% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+    <div class="uk-card uk-card-default">
+        <form action="" method="post" novalidate>
+            {{ rsu_form.hidden_tag() }}
+            {{ rsu_form.csrf_token }}
+
+            <fieldset class="uk-fieldset">
+                <div class="uk-card-body">
+                    <legend class="uk-legend">Create new RSU grant.</legend>
+                    <div class="uk-child-width-1-2" uk-grid>
+                        <div> {{ rsu_form.name(class="uk-input", placeholder="Grant name") }} </div>
+                        <div> {{ rsu_form.shares(class="uk-input", placeholder="Shares") }}</div>
+                    </div>
+                    <div class="uk-child-width-1-3" uk-grid>                        
+                        <div> {{ rsu_form.vesting(class="uk-input", placeholder="Vesting in years") }}</div>
+                        <div> {{ rsu_form.cliff(class="uk-input", placeholder="Cliff in years") }}</div>
+                        <div> {{ rsu_form.date(class="uk-input", type="date") }}</div>
+                    </div>
+                    <div class="uk-child-width-1-2" uk-grid>                        
+                        <div> {{ rsu_form.submit_rsu(class="uk-button uk-button-default")}}
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="uk-card uk-card-default">
+        <form action="" method="post" novalidate>
+            {{ option_form.hidden_tag() }}
+            {{ option_form.csrf_token }}
+
+            <fieldset class="uk-fieldset">
+                <div class="uk-card-body">
+                    <legend class="uk-legend">Create new Option grant.</legend>
+                    <div class="uk-child-width-1-2" uk-grid>
+                        <div> {{ option_form.name(class="uk-input", placeholder="Grant name") }} </div>
+                        <div> {{ option_form.shares(class="uk-input", placeholder="Shares") }}</div>
+                    </div>
+                    <div class="uk-child-width-1-4" uk-grid>                        
+                        <div> {{ option_form.vesting(class="uk-input", placeholder="Vesting in years") }}</div>
+                        <div> {{ option_form.cliff(class="uk-input", placeholder="Cliff in years") }}</div>
+                        <div> {{ option_form.date(class="uk-input", type="date") }}</div>
+                        <div> {{ option_form.strike(class="uk-input", placeholder="Strike price") }}</div>
+                    </div>
+                    <div class="uk-child-width-1-2" uk-grid>                        
+                        <div> {{ option_form.submit_option(class="uk-button uk-button-default")}}
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
 </div>
-</div>
+
+    {{ submitted_form }}
+
+
 {% endblock %}
 

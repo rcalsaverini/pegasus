@@ -1,4 +1,5 @@
 import sqlite3
+from sqlite3.dbapi2 import connect
 from flask import g
 
 
@@ -23,3 +24,11 @@ def query_one(query, args=()):
     rv = cur.fetchone()
     cur.close()
     return rv
+
+
+def insert_one(query, args=()):
+    connection = get_db()
+    cur = connection.cursor()
+    cur.execute(query, args)
+    connection.commit()
+    return cur.lastrowid
